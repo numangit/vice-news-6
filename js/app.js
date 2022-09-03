@@ -11,16 +11,11 @@ const loadDataCatagory = async () => {
     }
 }
 
-// const loadDataCatagory = () => {
-//     fetch('https://openapi.programming-hero.com/api/news/categories')
-//         .then(res => res.json())
-//         .then(data => displayCatagory(data.data.news_category))
-// }
 // load catagory by default
 loadDataCatagory();
+
 //function to display catagories
 const displayCatagory = (catagories) => {
-    // console.log(catagories)
     const catagoryContainer = document.getElementById('catagory-container');
     catagories.forEach(catagory => {
         const { category_id, category_name } = catagory;
@@ -35,17 +30,7 @@ const displayCatagory = (catagories) => {
     });
 }
 
-//================= news card section codes ==============================
-
 // function to load the news based on catagory
-// const loadNews = (id = 08) => {
-//     toggleSpinner(true);
-//     fetch(`https://openapi.programming-hero.com/api/news/category/${id}`)
-//         .then(res => res.json())
-//         .then(data => displayNews(data.data))
-//         .catch(showMessage())
-// }
-// loadNews();
 const loadNews = async (id) => {
     showMessage(0);
     try {
@@ -62,14 +47,10 @@ const loadNews = async (id) => {
 }
 // function to display the news
 const displayNews = (newsList) => {
-    console.log(newsList);
     toggleSpinner(false);
     const newsCardContainer = document.getElementById('news-card-container');
     newsCardContainer.innerHTML = '';
     newsList.forEach(news => {
-        console.log(news);
-        // const { image_url, title } = news;
-        // console.log(image_url, title);
         const newDiv = document.createElement('div');
         newDiv.classList.add('col');
         newDiv.innerHTML = `
@@ -92,14 +73,13 @@ const displayNews = (newsList) => {
 
                     <div class="w-25 text-center justify-content-center align-items-center mx-auto d-md-flex d-none "> <span><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></span></div>
 
-                    <div class="w-25 text-center d-flex justify-content-center align-items-center ms-auto "> <button class="btn text-danger"><i class="fa-solid fa-arrow-right fs-3"></i></button></div>
+                    <div class="w-25 text-center justify-content-center align-items-center ms-auto d-none d-md-flex "> <button class="btn text-danger"><i class="fa-solid fa-arrow-right fs-3"></i></button></div>
                 </div>
             </div>
         </div>
         `;
         newsCardContainer.appendChild(newDiv);
         showMessage(newsList.length);
-        // console.log(newsAmmount)
     });
 
     // function to sort and show most viewed
@@ -139,22 +119,20 @@ const displayNews = (newsList) => {
             showMessage(newsList.length);
         });
     })
-
-
 }
 
 // function to display details in modal
 const displayModalDetails = (img, title, author, publichDate, rating) => {
-    const cardBody = document.getElementById('card-details')
+    const cardBody = document.getElementById('card-details');
     cardBody.innerHTML = `
-                    <img src="${img}" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">${title}</h5>
-                        <p class="card-text"><small class="text-muted">Author : </small><strong> ${author} </strong></p>
-                        <p class="card-text"><small class="text-muted"> Published on : </small><strong>${publichDate} </strong></p>
-                        <p class="card-text"><small class="text-muted"> Rating : </small><strong>${rating} </strong></p>
-                    </div>
-    `
+            <img src="${img}" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">${title}</h5>
+                <p class="card-text"><small class="text-muted">Author : </small><strong> ${author} </strong></p>
+                <p class="card-text"><small class="text-muted"> Published on : </small><strong>${publichDate} </strong></p>
+                <p class="card-text"><small class="text-muted"> Rating : </small><strong>${rating} </strong></p>
+            </div>
+            `
 }
 
 //function to show result message
