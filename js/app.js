@@ -1,17 +1,15 @@
-// const loadDataCatagory = async (searchText) => {
-//     const res = await fetch(`https://openapi.programming-hero.com/api/news/categories`);
-//     const data = await res.json();
-//     displayCatagory(data.data.news_category)
-// }
-
-//=============== catagory section codes =====================
+const loadDataCatagory = async (searchText) => {
+    const res = await fetch(`https://openapi.programming-hero.com/api/news/categories`);
+    const data = await res.json();
+    displayCatagory(data.data.news_category)
+}
 
 // function to get and load data catagory
-const loadDataCatagory = () => {
-    fetch('https://openapi.programming-hero.com/api/news/categories')
-        .then(res => res.json())
-        .then(data => displayCatagory(data.data.news_category))
-}
+// const loadDataCatagory = () => {
+//     fetch('https://openapi.programming-hero.com/api/news/categories')
+//         .then(res => res.json())
+//         .then(data => displayCatagory(data.data.news_category))
+// }
 // load catagory by default
 loadDataCatagory();
 //function to display catagories
@@ -19,11 +17,12 @@ const displayCatagory = (catagories) => {
     // console.log(catagories)
     const catagoryContainer = document.getElementById('catagory-container');
     catagories.forEach(catagory => {
+        const { category_id, category_name } = catagory;
         const newLi = document.createElement("li");
         newLi.classList.add("nav-item");
         newLi.innerHTML = `
         <li class="nav-item">
-            <a class="nav-link text-dark-gray fw-semibold" aria-current="page" href="#" onclick="loadNews('${catagory.category_id}')">${catagory.category_name}</a>
+            <a class="nav-link text-dark-gray fw-semibold" aria-current="page" href="#" onclick="loadNews('${category_id}')">${category_name}</a>
         </li>
         `
         catagoryContainer.appendChild(newLi)
@@ -55,18 +54,19 @@ const loadNews = (id = 08) => {
 // }
 // function to display the news
 const displayNews = (newsList) => {
+    console.log(newsList);
     toggleSpinner(false);
     const newsCardContainer = document.getElementById('news-card-container');
     newsCardContainer.innerHTML = '';
     newsList.forEach(news => {
-        console.log(news);
+        // console.log(news);
         // const { image_url, title } = news;
         // console.log(image_url, title);
         const newDiv = document.createElement('div');
         newDiv.classList.add('col');
         newDiv.innerHTML = `
         <div onclick="displayModalDetails('${news.image_url}','${news.title}','${news.author.name ? news.author.name : " No data Found"}','${news.author.published_date ? news.author.published_date : " No data Found"}','${news.rating.number}')" class="card flex-sm-row p-2" data-bs-toggle="modal" data-bs-target="#newsModal">
-            <img src="${news.thumbnail_url}">
+            <img class="" src="${news.thumbnail_url}">
             <div class="card-body text-start align-items-center pt-lg-3">
                     <h5 class="card-title text-dark fw-bold fs-3">${news.title}</h5>
                     <p class="card-text text-muted fw-light pt-lg-3">${news.details.length < 300 ? news.details :
@@ -74,14 +74,16 @@ const displayNews = (newsList) => {
                 <div class="d-lg-flex mx-auto mt-5">
                     <div class="d-flex w-25 justify-space-around mx-auto">
                         <div class=" w-25 " >
-                            <img class="img-fluid rounded-circle" src="${news.author.img ? news.author.img : " No data Found"}" alt="">
+                            <img class="img-fluid rounded-circle d-none d-md-flex" src="${news.author.img ? news.author.img : " No data Found"}" alt="">
                         </div>
                         <div class="d-flex justify-content-center align-items-center">
                             <p class="fw-semibold ps-3">${news.author.name ? news.author.name : "No data Found"}</p>                  
                         </div>
                     </div>
-                    <div class="w-25 text-center d-flex justify-content-center align-items-center mx-auto"><i class="fa-regular fa-eye"></i>&nbsp;&nbsp;<strong>${news.total_view}</strong></div>
-                    <div class="w-25 text-center d-flex justify-content-center align-items-center mx-auto "> <span><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></span></div>
+                    <div class="w-25 text-center d-flex justify-content-center align-items-center mx-auto"><i class="fa-regular fa-eye"></i>&nbsp;&nbsp;<strong>${news.total_view === null ? "no data found" : news.total_view}</strong></div>
+
+                    <div class="w-25 text-center justify-content-center align-items-center mx-auto d-md-flex d-none "> <span><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></span></div>
+
                     <div class="w-25 text-center d-flex justify-content-center align-items-center ms-auto "> <button class="btn text-primary"><i class="fa-solid fa-arrow-right fs-3"></i></button></div>
                 </div>
             </div>
@@ -91,6 +93,51 @@ const displayNews = (newsList) => {
         showMessage(newsList.length);
         // console.log(newsAmmount)
     });
+
+    // function for sorting
+    // const lll = () => {
+    //     const optionClicked = document.getElementById('sort').value;
+    //     if(optionClicked === "Most Viewed")
+    // }
+    document.getElementById('most-viewed').addEventListener('click', function () {
+
+        newsCardContainer.innerHTML = '';
+        newsList.sort((news1, news2) => news2.total_view - news1.total_view);
+        newsList.forEach((news) => {
+            // console.log(`${e.title} ${e.total_view}`);
+            const newDiv = document.createElement('div');
+            newDiv.classList.add('col');
+            newDiv.innerHTML = `
+            <div onclick="displayModalDetails('${news.image_url}','${news.title}','${news.author.name ? news.author.name : " No data Found"}','${news.author.published_date ? news.author.published_date : " No data Found"}','${news.rating.number}')" class="card flex-sm-row p-2" data-bs-toggle="modal" data-bs-target="#newsModal">
+                <img class="" src="${news.thumbnail_url}">
+                <div class="card-body text-start align-items-center pt-lg-3">
+                        <h5 class="card-title text-dark fw-bold fs-3">${news.title}</h5>
+                        <p class="card-text text-muted fw-light pt-lg-3">${news.details.length < 300 ? news.details :
+                    news.details.slice(0, 300) + "..."}</p>
+                    <div class="d-lg-flex mx-auto mt-5">
+                        <div class="d-flex w-25 justify-space-around mx-auto">
+                            <div class=" w-25 " >
+                                <img class="img-fluid rounded-circle d-none d-md-flex" src="${news.author.img ? news.author.img : " No data Found"}" alt="">
+                            </div>
+                            <div class="d-flex justify-content-center align-items-center">
+                                <p class="fw-semibold ps-3">${news.author.name ? news.author.name : "No data Found"}</p>                  
+                            </div>
+                        </div>
+                        <div class="w-25 text-center d-flex justify-content-center align-items-center mx-auto"><i class="fa-regular fa-eye"></i>&nbsp;&nbsp;<strong>${news.total_view === null ? "no data found" : news.total_view}</strong></div>
+    
+                        <div class="w-25 text-center justify-content-center align-items-center mx-auto d-md-flex d-none "> <span><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></span></div>
+    
+                        <div class="w-25 text-center d-flex justify-content-center align-items-center ms-auto "> <button class="btn text-primary"><i class="fa-solid fa-arrow-right fs-3"></i></button></div>
+                    </div>
+                </div>
+            </div>
+            `;
+            newsCardContainer.appendChild(newDiv);
+            showMessage(newsList.length);
+        });
+    })
+
+
 }
 
 // function to display details in modal
@@ -129,3 +176,5 @@ const toggleSpinner = isLoading => {
         loaderSection.classList.add('d-none');
     }
 }
+
+
