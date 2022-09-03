@@ -92,18 +92,14 @@
 
         <!-- search result message section -->
         <section id="message-container" class="text-center my-3 py-3 fs-4 bg-white d-none"></section>
-        <!-- djdjd  -->
 
         <!-- sorting section  -->
-        <section class="d-flex flex-sm-column flex-lg-row justify-content-between my-3">
-            <!-- <div class="w-50 text-center">
-                <strong>Sort By : </strong>
-                <select id="sort" class="form-control  w-25 d-inline" name="price-sorting">
-                    <option value="default">Default</option>
-                    <option value="Most Viewed">Most Viewed</option>
-                </select>
-            </div> -->
-            <div class="dropdown">
+        <section class=" d-sm-flex flex-md-row-reverse justify-content-between my-3">
+            <div class="w-100 mt-2 mt-md-0 d-lg-flex justify-content-end ">
+                <button class="btn btn-outline-danger mx-md-1">Today's Pick</button>
+                <button class="btn btn-outline-danger mx-md-1">Trending</button>
+            </div>
+            <div class="w-100 dropdown mt-2 mt-md-0 justify-content-center">
                 <strong>Sort By : </strong>
                 <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
                     aria-expanded="false">
@@ -113,10 +109,6 @@
                     <li id="all-news"><a class="dropdown-item active" href="#">Default</a></li>
                     <li id="most-viewed"><a class="dropdown-item" href="#">Most Viewed</a></li>
                 </ul>
-            </div>
-            <div class="">
-                <button class="btn btn-danger">Today's Pick</button>
-                <button class="btn btn-outline-danger">Trending</button>
             </div>
         </section>
 
@@ -134,7 +126,7 @@
                                 <!-- dynamic data here  -->
                             </div>
                             <div class="d-flex justify-content-center">
-                                <button type="button" class="btn btn-outline-primary"
+                                <button type="button" class="btn btn-outline-secondary"
                                     data-bs-dismiss="modal">Close</button>
                             </div>
                         </div>

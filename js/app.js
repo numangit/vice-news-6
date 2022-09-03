@@ -1,10 +1,15 @@
-const loadDataCatagory = async (searchText) => {
-    const res = await fetch(`https://openapi.programming-hero.com/api/news/categories`);
-    const data = await res.json();
-    displayCatagory(data.data.news_category)
+// function to get and load data catagory
+const loadDataCatagory = async () => {
+    try {
+        const res = await fetch(`https://openapi.programming-hero.com/api/news/categories`);
+        const data = await res.json();
+        displayCatagory(data.data.news_category)
+    } catch (error) {
+        document.getElementById('page-container').innerHTML = `<p class="display-3 text-center p-5"> Error Found ${error}</p>`;
+        console.log(error)
+    }
 }
 
-// function to get and load data catagory
 // const loadDataCatagory = () => {
 //     fetch('https://openapi.programming-hero.com/api/news/categories')
 //         .then(res => res.json())
@@ -37,7 +42,7 @@ const loadNews = (id = 08) => {
     fetch(`https://openapi.programming-hero.com/api/news/category/${id}`)
         .then(res => res.json())
         .then(data => displayNews(data.data))
-        .catch(showMessage())//problemmmmmmmm it show no result everytime
+        .catch(showMessage())
 }
 // loadNews();
 // const loadNews = async (id) => {
@@ -59,7 +64,7 @@ const displayNews = (newsList) => {
     const newsCardContainer = document.getElementById('news-card-container');
     newsCardContainer.innerHTML = '';
     newsList.forEach(news => {
-        // console.log(news);
+        console.log(news);
         // const { image_url, title } = news;
         // console.log(image_url, title);
         const newDiv = document.createElement('div');
@@ -84,7 +89,7 @@ const displayNews = (newsList) => {
 
                     <div class="w-25 text-center justify-content-center align-items-center mx-auto d-md-flex d-none "> <span><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></span></div>
 
-                    <div class="w-25 text-center d-flex justify-content-center align-items-center ms-auto "> <button class="btn text-primary"><i class="fa-solid fa-arrow-right fs-3"></i></button></div>
+                    <div class="w-25 text-center d-flex justify-content-center align-items-center ms-auto "> <button class="btn text-danger"><i class="fa-solid fa-arrow-right fs-3"></i></button></div>
                 </div>
             </div>
         </div>
@@ -94,13 +99,8 @@ const displayNews = (newsList) => {
         // console.log(newsAmmount)
     });
 
-    // function for sorting
-    // const lll = () => {
-    //     const optionClicked = document.getElementById('sort').value;
-    //     if(optionClicked === "Most Viewed")
-    // }
+    // function to sort and show most viewed
     document.getElementById('most-viewed').addEventListener('click', function () {
-
         newsCardContainer.innerHTML = '';
         newsList.sort((news1, news2) => news2.total_view - news1.total_view);
         newsList.forEach((news) => {
@@ -123,11 +123,11 @@ const displayNews = (newsList) => {
                                 <p class="fw-semibold ps-3">${news.author.name ? news.author.name : "No data Found"}</p>                  
                             </div>
                         </div>
-                        <div class="w-25 text-center d-flex justify-content-center align-items-center mx-auto"><i class="fa-regular fa-eye"></i>&nbsp;&nbsp;<strong>${news.total_view === null ? "no data found" : news.total_view}</strong></div>
+                        <div class="w-25  text-center d-flex justify-content-center align-items-center mx-auto"><i class="fa-regular fa-eye"></i>&nbsp;&nbsp;<strong>${news.total_view === null ? "no data found" : news.total_view}</strong></div>
     
                         <div class="w-25 text-center justify-content-center align-items-center mx-auto d-md-flex d-none "> <span><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></span></div>
     
-                        <div class="w-25 text-center d-flex justify-content-center align-items-center ms-auto "> <button class="btn text-primary"><i class="fa-solid fa-arrow-right fs-3"></i></button></div>
+                        <div class="w-25 text-center d-flex justify-content-center align-items-center ms-auto "> <button class="btn text-danger"><i class="fa-solid fa-arrow-right fs-3"></i></button></div>
                     </div>
                 </div>
             </div>
