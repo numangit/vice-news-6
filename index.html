@@ -5,6 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Vice+ News</title>
+    <!-- font awesome link  -->
+    <script src="https://kit.fontawesome.com/48da40577d.js" crossorigin="anonymous"></script>
     <!-- boostrap cdn link -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
@@ -17,10 +19,15 @@
         body {
             font-family: 'Poppins', sans-serif;
         }
+
+        .text-dark-gray {
+            color: rgb(81, 81, 81);
+        }
     </style>
 </head>
 
 <body class="bg-light">
+
     <!--===== header ===-->
     <header class="container">
         <!-- nav bar starts here -->
@@ -47,18 +54,26 @@
         </nav>
         <hr class="my-0 py-3">
     </header>
+
     <!--===== main ===-->
     <main class="container">
+
         <!-- catagory section -->
         <section>
-            <ul id="catagory-container" class="nav nav-fill nav-pills justify-content-center d-sm-flex d-block"></ul>
+            <ul id="catagory-container" class="nav nav-fill nav-tabs justify-content-center d-sm-flex d-block"></ul>
         </section>
-        <!-- search result message section -->
-        <!-- news cards section-->
-        <section id="news-card-container" class="row row-cols-1 row-cols-md-1 g-3 my-3">
 
+        <!-- search result message section -->
+        <section id="message-container" class="text-center py-3 fs-4"></section>
+
+        <!-- news cards section-->
+        <section id="news-card-container" class="row row-cols-1 row-cols-md-1 g-3 my-2">
         </section>
+
+        <!-- modal  -->
+
     </main>
+
     <!--===== footer  ===-->
     <footer>
         <div class="bg-white p-5 text-center">
