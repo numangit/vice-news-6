@@ -1,3 +1,5 @@
+//................................catagory related codes..............................................
+
 // function to get and load data catagory
 const loadDataCatagory = async () => {
     try {
@@ -16,6 +18,7 @@ loadDataCatagory();
 
 //function to display catagories
 const displayCatagory = (catagories) => {
+    // console.log(catagories)
     const catagoryContainer = document.getElementById('catagory-container');
     catagories.forEach(catagory => {
         const { category_id, category_name } = catagory;
@@ -29,22 +32,25 @@ const displayCatagory = (catagories) => {
         catagoryContainer.appendChild(newLi)
     });
 }
+//................................news cards related codes most veiwed news related code..............................................
 
 // function to load the news based on catagory
 const loadNews = async (id) => {
     showMessage(0);
+    toggleSpinner(true);// put it up of try
     try {
-        toggleSpinner(true);
         const res = await fetch(`https://openapi.programming-hero.com/api/news/category/${id}`);
         const data = await res.json();
         displayNews(data.data)
         return data;
     } catch (err) {
+        toggleSpinner(false);
         document.getElementById('page-container').innerHTML = `<p class="display-3 text-center p-5"> Sorry, We have faced an Error.</p>
         <p class="display-4 text-center p-5"> ${error}</p>`;
         console.log(err.message);
     }
 }
+
 // function to display the news
 const displayNews = (newsList) => {
     toggleSpinner(false);
@@ -54,7 +60,7 @@ const displayNews = (newsList) => {
         const newDiv = document.createElement('div');
         newDiv.classList.add('col');
         newDiv.innerHTML = `
-        <div onclick="displayModalDetails('${news.image_url}','${news.title}','${news.author.name ? news.author.name : " No data Found"}','${news.author.published_date ? news.author.published_date : " No data Found"}','${news.rating.number}')" class="card flex-sm-row p-2" data-bs-toggle="modal" data-bs-target="#newsModal">
+        <div onclick="loadModalDetails('${news._id}')" class="card flex-sm-row p-2" data-bs-toggle="modal" data-bs-target="#newsModal">
             <img class="" src="${news.thumbnail_url}">
             <div class="card-body text-start align-items-center pt-lg-3">
                     <h5 class="card-title text-dark fw-bold fs-3">${news.title}</h5>
@@ -81,6 +87,7 @@ const displayNews = (newsList) => {
         newsCardContainer.appendChild(newDiv);
         showMessage(newsList.length);
     });
+    //................................most viewed related code..............................
 
     // function to sort and show most viewed
     document.getElementById('most-viewed').addEventListener('click', function () {
@@ -91,7 +98,7 @@ const displayNews = (newsList) => {
             const newDiv = document.createElement('div');
             newDiv.classList.add('col');
             newDiv.innerHTML = `
-            <div onclick="displayModalDetails('${news.image_url}','${news.title}','${news.author.name ? news.author.name : " No data Found"}','${news.author.published_date ? news.author.published_date : " No data Found"}','${news.rating.number}')" class="card flex-sm-row p-2" data-bs-toggle="modal" data-bs-target="#newsModal">
+            <div onclick="loadModalDetails('${news._id}')" class="card flex-sm-row p-2" data-bs-toggle="modal" data-bs-target="#newsModal">
                 <img class="" src="${news.thumbnail_url}">
                 <div class="card-body text-start align-items-center pt-lg-3">
                         <h5 class="card-title text-dark fw-bold fs-3">${news.title}</h5>
@@ -121,19 +128,38 @@ const displayNews = (newsList) => {
     })
 }
 
+//................................Modal..............................................
+
+// function to load modal details by id
+const loadModalDetails = async (news_id) => {
+    try {
+        const res = await fetch(`https://openapi.programming-hero.com/api/news/${news_id}`);
+        const data = await res.json();
+        displayModalDetails(data.data[0]);
+        return data;
+    } catch (err) {
+        document.getElementById('page-container').innerHTML = `<p class="display-3 text-center p-5"> Sorry, We have faced an Error.</p>
+        <p class="display-4 text-center p-5"> ${error}</p>`;
+        console.log(err.message);
+    }
+}
+
 // function to display details in modal
-const displayModalDetails = (img, title, author, publichDate, rating) => {
+const displayModalDetails = (details) => {
     const cardBody = document.getElementById('card-details');
     cardBody.innerHTML = `
-            <img src="${img}" class="card-img-top" alt="...">
+            <img src="${details.image_url}" class="card-img-top" alt="...">
             <div class="card-body">
-                <h5 class="card-title">${title}</h5>
-                <p class="card-text"><small class="text-muted">Author : </small><strong> ${author} </strong></p>
-                <p class="card-text"><small class="text-muted"> Published on : </small><strong>${publichDate} </strong></p>
-                <p class="card-text"><small class="text-muted"> Rating : </small><strong>${rating} </strong></p>
+                <h5 class="card-title">${details.title}</h5>
+                <p class="card-text"><small class="text-muted">Author : </small><strong> ${details.author.name ? details.author.name : "Not Available"} </strong></p>
+                <p class="card-text"><small class="text-muted"> Published on : </small><strong>${details.author.published_date ? details.author.published_date : "Not Available"} </strong></p>
+                <p class="card-text"><small class="text-muted"> Rating : </small><strong>${details.rating.number}</strong></p>
+                <p class="card-text">${details.details}</p>
             </div>
             `
 }
+
+//................................loading and result related codes..............................
 
 //function to show result message
 const showMessage = (resultAmmount = 0) => {
