@@ -5,7 +5,8 @@ const loadDataCatagory = async () => {
         const data = await res.json();
         displayCatagory(data.data.news_category)
     } catch (error) {
-        document.getElementById('page-container').innerHTML = `<p class="display-3 text-center p-5"> Error Found ${error}</p>`;
+        document.getElementById('page-container').innerHTML = `<p class="display-3 text-center p-5"> Sorry, We have faced an Error.</p>
+        <p class="display-4 text-center p-5"> ${error}</p>`;
         console.log(error)
     }
 }
@@ -37,26 +38,28 @@ const displayCatagory = (catagories) => {
 //================= news card section codes ==============================
 
 // function to load the news based on catagory
-const loadNews = (id = 08) => {
-    toggleSpinner(true);
-    fetch(`https://openapi.programming-hero.com/api/news/category/${id}`)
-        .then(res => res.json())
-        .then(data => displayNews(data.data))
-        .catch(showMessage())
-}
-// loadNews();
-// const loadNews = async (id) => {
-//     try {
-//         toggleSpinner(false);
-//         const res = await fetch(`https://openapi.programming-hero.com/api/news/category/${id}`);
-//         const data = await res.json();
-//         displayNews(data.data)
-//         showMessage()
-//         return data;
-//     } catch (err) {
-//         console.log(err.message);
-//     }
+// const loadNews = (id = 08) => {
+//     toggleSpinner(true);
+//     fetch(`https://openapi.programming-hero.com/api/news/category/${id}`)
+//         .then(res => res.json())
+//         .then(data => displayNews(data.data))
+//         .catch(showMessage())
 // }
+// loadNews();
+const loadNews = async (id) => {
+    showMessage(0);
+    try {
+        toggleSpinner(true);
+        const res = await fetch(`https://openapi.programming-hero.com/api/news/category/${id}`);
+        const data = await res.json();
+        displayNews(data.data)
+        return data;
+    } catch (err) {
+        document.getElementById('page-container').innerHTML = `<p class="display-3 text-center p-5"> Sorry, We have faced an Error.</p>
+        <p class="display-4 text-center p-5"> ${error}</p>`;
+        console.log(err.message);
+    }
+}
 // function to display the news
 const displayNews = (newsList) => {
     console.log(newsList);
