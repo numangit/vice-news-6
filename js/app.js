@@ -12,7 +12,7 @@ const loadDataCatagory = () => {
         .then(res => res.json())
         .then(data => displayCatagory(data.data.news_category))
 }
-// load by default
+// load catagory by default
 loadDataCatagory();
 //function to display catagories
 const displayCatagory = (catagories) => {
@@ -29,8 +29,6 @@ const displayCatagory = (catagories) => {
         catagoryContainer.appendChild(newLi)
     });
 }
-
-
 
 //================= news card section codes ==============================
 
@@ -62,13 +60,15 @@ const displayNews = (newsList) => {
     newsCardContainer.innerHTML = '';
     newsList.forEach(news => {
         console.log(news);
+        // const { image_url, title } = news;
+        // console.log(image_url, title);
         const newDiv = document.createElement('div');
         newDiv.classList.add('col');
         newDiv.innerHTML = `
-        <div class="shadow-sm card flex-sm-row p-2" data-bs-toggle="modal" data-bs-target="#newsModal">
+        <div onclick="displayModalDetails('${news.image_url}','${news.title}','${news.author.name ? news.author.name : " No data Found"}','${news.author.published_date ? news.author.published_date : " No data Found"}','${news.rating.number}')" class="card flex-sm-row p-2" data-bs-toggle="modal" data-bs-target="#newsModal">
             <img src="${news.thumbnail_url}">
             <div class="card-body text-start align-items-center pt-lg-3">
-                    <h5 class="card-title text-secondary fw-bold fs-3">${news.title}</h5>
+                    <h5 class="card-title text-dark fw-bold fs-3">${news.title}</h5>
                     <p class="card-text text-muted fw-light pt-lg-3">${news.details.length < 300 ? news.details :
                 news.details.slice(0, 300) + "..."}</p>
                 <div class="d-lg-flex mx-auto mt-5">
@@ -81,7 +81,8 @@ const displayNews = (newsList) => {
                         </div>
                     </div>
                     <div class="w-25 text-center d-flex justify-content-center align-items-center mx-auto"><i class="fa-regular fa-eye"></i>&nbsp;&nbsp;<strong>${news.total_view}</strong></div>
-                    <div class="w-25 text-center d-flex justify-content-center align-items-center mx-auto "> <button class="btn text-primary"><i class="fa-solid fa-arrow-right fs-3"></i></button></div>
+                    <div class="w-25 text-center d-flex justify-content-center align-items-center mx-auto "> <span><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></span></div>
+                    <div class="w-25 text-center d-flex justify-content-center align-items-center ms-auto "> <button class="btn text-primary"><i class="fa-solid fa-arrow-right fs-3"></i></button></div>
                 </div>
             </div>
         </div>
@@ -93,8 +94,17 @@ const displayNews = (newsList) => {
 }
 
 // function to display details in modal
-const displayModalDetails = (newDetails) => {
-
+const displayModalDetails = (img, title, author, publichDate, rating) => {
+    const cardBody = document.getElementById('card-details')
+    cardBody.innerHTML = `
+                    <img src="${img}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">${title}</h5>
+                        <p class="card-text"><small class="text-muted">Author : </small><strong> ${author} </strong></p>
+                        <p class="card-text"><small class="text-muted"> Published on : </small><strong>${publichDate} </strong></p>
+                        <p class="card-text"><small class="text-muted"> Rating : </small><strong>${rating} </strong></p>
+                    </div>
+    `
 }
 
 //function to show result message

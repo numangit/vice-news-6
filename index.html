@@ -93,31 +93,38 @@
         <!-- search result message section -->
         <section id="message-container" class="text-center my-3 py-3 fs-4 bg-white d-none"></section>
 
+        <!-- sorting section  -->
+        <section class="d-flex flex-sm-column flex-lg-row justify-content-between my-3">
+            <div class="justify-content-start">
+                <p>Sort By View: <select name="default" id="" placeholder="default">Default</select></p>
+            </div>
+            <div class="justify-content-end">
+                <button class="btn btn-danger">Today's Pick</button>
+                <button class="btn btn-outline-danger">Trending</button>
+            </div>
+        </section>
+
         <!-- news cards section-->
-        <section id="news-card-container" class="row row-cols-1 row-cols-md-1 g-3 my-2">
+        <section id="news-card-container" class="row row-cols-1 row-cols-md-1 g-3 my-1 p-2">
         </section>
 
         <!-- modal  -->
         <section>
-            <!-- <div class="modal fade" id="newsModal" tabindex="-1" aria-labelledby="newsModalLabel" aria-hidden="true">
+            <div class="modal fade" id="newsModal" tabindex="-1" aria-labelledby="newsModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                     <div class="modal-content">
                         <div class="modal-body">
-                            <div class="card mb-3">
-                                <img src="${news.image_url}" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <h5 class="card-title"></h5>
-                                    <p class="card-text">${news.details}</p>
-                                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                                </div>
+                            <div id="card-details" class="card mb-3">
+                                <!-- dynamic data here  -->
                             </div>
-                        </div>
-                        <div class="modal-footer justify-content-center bg-light">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <div class="d-flex justify-content-center">
+                                <button type="button" class="btn btn-outline-primary"
+                                    data-bs-dismiss="modal">Close</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div> -->
+            </div>
         </section>
     </main>
 
