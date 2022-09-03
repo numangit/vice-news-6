@@ -5,6 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Vice+ News</title>
+    <!-- favicone -->
+    <link rel="icon" type="image/x-icon" href="./resources/130291-letter-v-png-download-free.png">
     <!-- font awesome link  -->
     <script src="https://kit.fontawesome.com/48da40577d.js" crossorigin="anonymous"></script>
     <!-- boostrap cdn link -->
@@ -23,17 +25,34 @@
         .text-dark-gray {
             color: rgb(81, 81, 81);
         }
+
+        #page-container {
+            position: relative;
+            min-height: 100vh;
+        }
+
+        #content-wrap {
+            padding-bottom: 2.5rem;
+        }
+
+        #footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 2.5rem;
+        }
     </style>
 </head>
 
-<body class="bg-light">
+<body id="page-container" class="bg-light">
 
     <!--===== header ===-->
     <header class="container">
         <!-- nav bar starts here -->
         <nav class="navbar navbar-expand-lg bg-light">
             <div class="container-fluid">
-                <a class="navbar-brand fw-semibold ps-5 fs-3" href="#">VICE<span class="text-danger fw-bolder ">+</span>
+                <a class="navbar-brand fw-semibold ps-5 fs-3" href="#"><span
+                        class="text-danger fw-bolder ">V</span>ice<span class="text-danger fw-bolder ">+</span>
                     News</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -43,7 +62,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0 pe-4">
                         <li class="nav-item">
-                            <a class="nav-link active fw-semibold" aria-current="page" href="#">Home</a>
+                            <a class="nav-link active fw-semibold" aria-current="page" href="#">News</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link fw-semibold" href="./blog.html">Blogs</a>
@@ -56,7 +75,7 @@
     </header>
 
     <!--===== main ===-->
-    <main class="container">
+    <main id="content-wrap" class="container">
 
         <!-- catagory section -->
         <section>
@@ -72,7 +91,7 @@
         </section>
 
         <!-- search result message section -->
-        <section id="message-container" class="text-center py-3 fs-4"></section>
+        <section id="message-container" class="text-center my-3 py-3 fs-4 bg-white d-none"></section>
 
         <!-- news cards section-->
         <section id="news-card-container" class="row row-cols-1 row-cols-md-1 g-3 my-2">
@@ -80,33 +99,34 @@
 
         <!-- modal  -->
         <section>
-            <div class="modal fade" id="newsModal" tabindex="-1" aria-labelledby="newsModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
+            <!-- <div class="modal fade" id="newsModal" tabindex="-1" aria-labelledby="newsModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                     <div class="modal-content">
-                        <!-- <div class="modal-header justify-content-center bg-light">
-                            <h5 class="modal-title" id="newsModalLabel"></h5>
+                        <div class="modal-body">
+                            <div class="card mb-3">
+                                <img src="${news.image_url}" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <h5 class="card-title"></h5>
+                                    <p class="card-text">${news.details}</p>
+                                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                                </div>
+                            </div>
                         </div>
-                        <div id="phone-details" class="modal-body"></div>
                         <div class="modal-footer justify-content-center bg-light">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        </div> -->
-                        <div id="modal-body" class="card modal-body" style="width: 18rem;">
-                            <img src="" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <p class="card-text">Some quick example text to build on the card title and make up the
-                                    bulk of the card's content.</p>
-                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </section>
     </main>
 
     <!--===== footer  ===-->
-    <footer>
-        <div class="bg-white p-5 text-center">
-            <p>Copyright Ⓒ 2022 All Rights Reserved by VICE<span class="text-danger fw-bolder ">+</span> News.</p>
+    <footer id="footer">
+        <div class="bg-dark p-5 text-center text-light">
+            <p>Copyright Ⓒ 2022 All Rights Reserved by <span class="text-danger fw-bolder ">V</span>ice<span
+                    class="text-danger fw-bolder ">+</span>
+                News.</p>
         </div>
     </footer>
     <!-- js link  -->

@@ -35,13 +35,14 @@ const displayCatagory = (catagories) => {
 //================= news card section codes ==============================
 
 // function to load the news based on catagory
-const loadNews = (id) => {
+const loadNews = (id = 08) => {
     toggleSpinner(true);
     fetch(`https://openapi.programming-hero.com/api/news/category/${id}`)
         .then(res => res.json())
         .then(data => displayNews(data.data))
         .catch(showMessage())//problemmmmmmmm it show no result everytime
 }
+// loadNews();
 // const loadNews = async (id) => {
 //     try {
 //         toggleSpinner(false);
@@ -64,26 +65,26 @@ const displayNews = (newsList) => {
         const newDiv = document.createElement('div');
         newDiv.classList.add('col');
         newDiv.innerHTML = `
-        <div class="card flex-sm-row p-2" onclick="displayModalDetails()" data-bs-toggle="modal" data-bs-target="#newsModal">
+        <div class="shadow-sm card flex-sm-row p-2" data-bs-toggle="modal" data-bs-target="#newsModal">
             <img src="${news.thumbnail_url}">
             <div class="card-body text-start align-items-center pt-lg-3">
                     <h5 class="card-title text-secondary fw-bold fs-3">${news.title}</h5>
-                    <p class="card-text text-muted fw-light pt-lg-3">${news.details.length < 200 ? news.details :
+                    <p class="card-text text-muted fw-light pt-lg-3">${news.details.length < 300 ? news.details :
                 news.details.slice(0, 300) + "..."}</p>
                 <div class="d-lg-flex mx-auto mt-5">
                     <div class="d-flex w-25 justify-space-around mx-auto">
                         <div class=" w-25 " >
-                            <img class="img-fluid rounded-circle" src="${news.author.img ? news.author.img : " No Result Found"}" alt="">
+                            <img class="img-fluid rounded-circle" src="${news.author.img ? news.author.img : " No data Found"}" alt="">
                         </div>
                         <div class="d-flex justify-content-center align-items-center">
-                            <p class="fw-semibold ps-3">${news.author.name ? news.author.name : "No Result Found"}</p>                  
+                            <p class="fw-semibold ps-3">${news.author.name ? news.author.name : "No data Found"}</p>                  
                         </div>
                     </div>
                     <div class="w-25 text-center d-flex justify-content-center align-items-center mx-auto"><i class="fa-regular fa-eye"></i>&nbsp;&nbsp;<strong>${news.total_view}</strong></div>
-                    <div class="w-25 text-center d-flex justify-content-center align-items-center mx-auto "> <button class="btn"><i class="fa-solid fa-arrow-right fs-3"></i></button></div>
+                    <div class="w-25 text-center d-flex justify-content-center align-items-center mx-auto "> <button class="btn text-primary"><i class="fa-solid fa-arrow-right fs-3"></i></button></div>
                 </div>
             </div>
-         </div>
+        </div>
         `;
         newsCardContainer.appendChild(newDiv);
         showMessage(newsList.length);
@@ -98,7 +99,8 @@ const displayModalDetails = (newDetails) => {
 
 //function to show result message
 const showMessage = (resultAmmount = 0) => {
-    const messageSection = document.getElementById('message-container')
+    const messageSection = document.getElementById('message-container');
+    messageSection.classList.remove('d-none');
     messageSection.innerText = '';
     if (resultAmmount === 0) {
         messageSection.innerText = "No Result Found"
