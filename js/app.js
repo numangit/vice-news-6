@@ -30,34 +30,33 @@ const displayCatagory = (catagories) => {
     });
 }
 
-//================ result message section =========================
-const showMessage = (resultAmmount = 0) => {
-    const messageSection = document.getElementById('message-container')
-    messageSection.innerText = '';
-    if (resultAmmount === 0) {
-        messageSection.innerText = "No Result Found"
-    } else {
-        messageSection.innerText = `${resultAmmount} Results Found`
-    }
-}
+
 
 //================= news card section codes ==============================
 
 // function to load the news based on catagory
-// const loadNews = (id) => {
-//     fetch(`https://openapi.programming-hero.com/api/news/category/${id}`)
-//         .then(res => res.json())
-//         .then(data => displayNews(data.data))
-//         .catch(showMessage())//problemmmmmmmm it show no result everytime
-// }
-const loadNews = async (id) => {
-    const res = await fetch(`https://openapi.programming-hero.com/api/news/category/${id}`);
-    const data = await res.json();
-    displayNews(data.data)
-    return data;
+const loadNews = (id) => {
+    toggleSpinner(true);
+    fetch(`https://openapi.programming-hero.com/api/news/category/${id}`)
+        .then(res => res.json())
+        .then(data => displayNews(data.data))
+        .catch(showMessage())//problemmmmmmmm it show no result everytime
 }
+// const loadNews = async (id) => {
+//     try {
+//         toggleSpinner(false);
+//         const res = await fetch(`https://openapi.programming-hero.com/api/news/category/${id}`);
+//         const data = await res.json();
+//         displayNews(data.data)
+//         showMessage()
+//         return data;
+//     } catch (err) {
+//         console.log(err.message);
+//     }
+// }
 // function to display the news
 const displayNews = (newsList) => {
+    toggleSpinner(false);
     const newsCardContainer = document.getElementById('news-card-container');
     newsCardContainer.innerHTML = '';
     newsList.forEach(news => {
@@ -85,7 +84,6 @@ const displayNews = (newsList) => {
                 </div>
             </div>
          </div>
-
         `;
         newsCardContainer.appendChild(newDiv);
         showMessage(newsList.length);
@@ -96,6 +94,17 @@ const displayNews = (newsList) => {
 // function to display details in modal
 const displayModalDetails = (newDetails) => {
 
+}
+
+//function to show result message
+const showMessage = (resultAmmount = 0) => {
+    const messageSection = document.getElementById('message-container')
+    messageSection.innerText = '';
+    if (resultAmmount === 0) {
+        messageSection.innerText = "No Result Found"
+    } else {
+        messageSection.innerText = `${resultAmmount} Results Found`
+    }
 }
 
 // function to toggle spinner 
