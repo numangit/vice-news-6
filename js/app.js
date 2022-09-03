@@ -44,11 +44,17 @@ const showMessage = (resultAmmount = 0) => {
 //================= news card section codes ==============================
 
 // function to load the news based on catagory
-const loadNews = (id) => {
-    fetch(`https://openapi.programming-hero.com/api/news/category/${id}`)
-        .then(res => res.json())
-        .then(data => displayNews(data.data))
-        .catch(showMessage())//problemmmmmmmm it show no result everytime
+// const loadNews = (id) => {
+//     fetch(`https://openapi.programming-hero.com/api/news/category/${id}`)
+//         .then(res => res.json())
+//         .then(data => displayNews(data.data))
+//         .catch(showMessage())//problemmmmmmmm it show no result everytime
+// }
+const loadNews = async (id) => {
+    const res = await fetch(`https://openapi.programming-hero.com/api/news/category/${id}`);
+    const data = await res.json();
+    displayNews(data.data)
+    return data;
 }
 // function to display the news
 const displayNews = (newsList) => {
@@ -59,7 +65,7 @@ const displayNews = (newsList) => {
         const newDiv = document.createElement('div');
         newDiv.classList.add('col');
         newDiv.innerHTML = `
-        <div class="card flex-sm-row p-2" onclick="loadPhoneDetails('${phone.slug}')" data-bs-toggle="modal" data-bs-target="#newsModal">
+        <div class="card flex-sm-row p-2" onclick="displayModalDetails()" data-bs-toggle="modal" data-bs-target="#newsModal">
             <img src="${news.thumbnail_url}">
             <div class="card-body text-start align-items-center pt-lg-3">
                     <h5 class="card-title text-secondary fw-bold fs-3">${news.title}</h5>
@@ -85,4 +91,20 @@ const displayNews = (newsList) => {
         showMessage(newsList.length);
         // console.log(newsAmmount)
     });
+}
+
+// function to display details in modal
+const displayModalDetails = (newDetails) => {
+
+}
+
+// function to toggle spinner 
+const toggleSpinner = isLoading => {
+    const loaderSection = document.getElementById('loader');
+    if (isLoading) {
+        loaderSection.classList.remove('d-none')
+    }
+    else {
+        loaderSection.classList.add('d-none');
+    }
 }
